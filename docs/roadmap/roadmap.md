@@ -22,8 +22,9 @@ Cada fase corresponde a un **milestone de GitHub** y termina en una release etiq
 
 ## ⏳ Fase 1 — Núcleo de datos · `v0.2.0`
 
-- [ ] ADR: PostgreSQL + SQLAlchemy 2.0 async + Alembic
-- [ ] `core/database.py` (engine y sesión async) + docker-compose con PostgreSQL
+- [x] ADR: PostgreSQL + SQLAlchemy 2.0 async + Alembic ([ADR-0007](../decisiones/ADR-0007-postgresql-sqlalchemy.md))
+- [x] `core/database.py` (engine y sesión async) + docker-compose con PostgreSQL
+- [x] Alembic configurado + verificación de migraciones en CI
 - [ ] Modelos `Player`, `Tournament`, `Registration`, `Match` + migración inicial
 - [ ] Repositorios y CRUD de jugadores y torneos (paginación, filtros)
 - [ ] Manejo de errores consistente (404, 409, 422)

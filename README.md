@@ -2,17 +2,22 @@
 
 API REST para la gestión de torneos competitivos: eliminación directa, sistema suizo y ranking ELO.
 
-> 🚧 En desarrollo — fase 0 (fundaciones del repositorio).
+> 🚧 En desarrollo — fase 1 (núcleo de datos).
 
 ## Stack
 
 - **Python 3.11+** · **FastAPI** · **Pydantic v2**
+- **PostgreSQL 17** · **SQLAlchemy 2** (async) · **Alembic**
 - Calidad: **Ruff**, **mypy** (strict), **pytest**, **pre-commit**
 - CI: **GitHub Actions**
 
 ## Puesta en marcha
 
+Requisitos: Python 3.11+ y [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+
 ```bash
+# 0. Levantar PostgreSQL (crea las bases torneos y torneos_test)
+docker compose up -d
 # 1. Crear y activar entorno virtual
 python -m venv .venv
 source .venv/bin/activate        # Linux / macOS
@@ -27,7 +32,10 @@ cp .env.example .env
 # 4. Instalar hooks de git
 pre-commit install
 
-# 5. Levantar el servidor
+# 5. Aplicar migraciones
+alembic upgrade head
+
+# 6. Levantar el servidor
 uvicorn app.main:app --reload
 ```
 
@@ -37,7 +45,10 @@ La documentación interactiva queda disponible en <http://localhost:8000/docs>.
 
 | Comando | Descripción |
 |---|---|
-| `pytest` | Ejecuta los tests |
+| `docker compose up -d` / `down` | Levanta / detiene PostgreSQL |
+| `alembic upgrade head` | Aplica las migraciones pendientes |
+| `alembic revision --autogenerate -m "..."` | Genera una migración desde los modelos |
+| `pytest` | Ejecuta los tests (requiere PostgreSQL arriba) |
 | `pytest --cov` | Tests con reporte de cobertura |
 | `ruff check .` | Lint |
 | `ruff format .` | Formatea el código |

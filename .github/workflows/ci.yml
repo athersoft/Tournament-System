@@ -18,6 +18,25 @@ jobs:
       matrix:
         python-version: ["3.11", "3.12"]
 
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: torneos
+          POSTGRES_PASSWORD: torneos
+          POSTGRES_DB: torneos_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U torneos -d torneos_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql+asyncpg://torneos:torneos@localhost:5432/torneos_test
+      TEST_DATABASE_URL: postgresql+asyncpg://torneos:torneos@localhost:5432/torneos_test
+
     steps:
       - uses: actions/checkout@v4
 
@@ -39,6 +58,11 @@ jobs:
 
       - name: Mypy
         run: mypy
+
+      - name: Migraciones (aplicar y verificar que no falten)
+        run: |
+          alembic upgrade head
+          alembic check
 
       - name: Pytest
         run: pytest --cov --cov-report=term-missing --cov-report=xml
