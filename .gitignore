@@ -24,6 +24,16 @@ htmlcov/
 *.db
 *.sqlite3
 
+# Obsidian (solo se versiona la config compartida del vault)
+docs/.obsidian/*
+!docs/.obsidian/app.json
+!docs/.obsidian/templates.json
+docs/.trash/
+
+# Claude Code (preferencias personales)
+.claude/settings.local.json
+CLAUDE.local.md
+
 # Editores / SO
 .vscode/
 .idea/

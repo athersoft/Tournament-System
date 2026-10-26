@@ -1,3 +1,6 @@
+# Archivos generados por Obsidian: se reescriben solos y no deben formatearse.
+exclude: ^docs/\.obsidian/
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
