@@ -58,6 +58,22 @@ tests/
 └── integration/
 ```
 
+## Documentación
+
+La carpeta [`docs/`](docs/README.md) es un vault de [Obsidian](https://obsidian.md) versionado con el código
+(ábrela con *Open folder as vault*). Incluye:
+
+- [Arquitectura](docs/arquitectura/vision-general.md) y [glosario del dominio](docs/arquitectura/glosario.md)
+- [Registro de decisiones (ADR)](docs/decisiones/README.md)
+- [Roadmap](docs/roadmap/roadmap.md) y bitácora de desarrollo
+
+## Desarrollo asistido por IA
+
+El proyecto se desarrolla con [Claude Code](https://claude.com/claude-code) bajo una
+[política explícita](docs/ia/uso-de-ia.md): el contexto vive en el repo ([`CLAUDE.md`](CLAUDE.md),
+`.claude/`, ADRs), todo cambio pasa por tests, CI y revisión humana, y los commits con aporte
+de IA se atribuyen con `Co-Authored-By`.
+
 ## Flujo de trabajo
 
 - `main` siempre está estable; cada cambio entra mediante Pull Request.
