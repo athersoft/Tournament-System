@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     environment: Literal["development", "testing", "production"] = "development"
     debug: bool = False
 
+    database_url: str = "postgresql+asyncpg://torneos:torneos@localhost:5432/torneos"
+    database_echo: bool = False
+
 
 @lru_cache
 def get_settings() -> Settings:

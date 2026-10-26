@@ -16,7 +16,10 @@ Proyecto de portafolio: la calidad del proceso importa tanto como el código.
 Entorno virtual en `.venv` (Windows: `.venv\Scripts\`). Instalar: `pip install -e ".[dev]"`.
 
 ```bash
-pytest                       # tests
+docker compose up -d         # PostgreSQL (bases torneos y torneos_test)
+alembic upgrade head         # aplicar migraciones
+alembic revision --autogenerate -m "add players table"   # nueva migración (revisarla siempre)
+pytest                       # tests (usan torneos_test, nunca la base de desarrollo)
 pytest --cov                 # tests + cobertura (mínimo 80%)
 ruff check . --fix           # lint
 ruff format .                # formato
@@ -34,8 +37,10 @@ Detalle en `docs/arquitectura/vision-general.md`. Reglas que no se rompen:
 - `app/services/` contiene lógica de dominio **pura**: no importa `fastapi` ni `sqlalchemy`.
 - `app/schemas/` (Pydantic, API) y `app/models/` (ORM) están separados; no reutilizar uno como otro.
 - Las rutas no contienen lógica de negocio: validan, delegan en servicios y mapean errores HTTP.
-- Configuración solo vía `app.core.config.get_settings()`; nunca leer `os.environ` directo.
-- La app se crea con `create_app()`; los tests usan el fixture `client` de `tests/conftest.py`.
+- En `app/`, la configuración llega solo por `Settings` (`SettingsDep` en rutas); nunca `os.environ`.
+- Sesión de BD por petición con `SessionDep` (`app/api/deps.py`); engine creado en el `lifespan`.
+- La app se crea con `create_app(settings)`; los tests usan los fixtures `settings` y `client`.
+- Todo cambio de modelos lleva su migración de Alembic en el mismo PR (el CI corre `alembic check`).
 
 ## Convenciones de código
 

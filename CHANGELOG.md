@@ -9,9 +9,18 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 ### Added
 
+- PostgreSQL 17 con `docker-compose.yml` (bases `torneos` y `torneos_test`).
+- SQLAlchemy 2 async: engine y sesión por petición (`SessionDep`), `Base` con convención de nombres.
+- Alembic configurado para leer la URL desde `Settings`; el CI verifica las migraciones.
+- ADR-0007: PostgreSQL + SQLAlchemy async + Alembic.
 - Vault de Obsidian en `docs/`: arquitectura, glosario, ADRs 0001–0006, roadmap y bitácora.
 - `CLAUDE.md`, skills de Claude Code (`/adr`, `/cerrar-sesion`) y política de uso de IA.
 - Sección de uso de IA y ADR en la plantilla de PR.
+
+### Changed
+
+- `GET /health` reporta el estado de la base de datos y responde 503 si no está disponible.
+- `create_app()` acepta un `Settings` opcional (los tests usan su propia base de datos).
 
 ## [0.1.0] - 2026-10-26
 
