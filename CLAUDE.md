@@ -62,6 +62,9 @@ Detalle en `docs/arquitectura/vision-general.md`. Reglas que no se rompen:
 - Enlaces markdown relativos `[texto](ruta.md)`, nunca `[[wikilinks]]`.
 - Toda nota lleva frontmatter (`tags`, y `fecha`/`estado` cuando aplique).
 - Decisión técnica con alternativas reales → nuevo ADR (skill `/adr`).
+- **Cada avance incluye una nota didáctica en `docs/aprendizaje/`** (el autor aprende con el proyecto):
+  conceptos nuevos explicados con problema → cómo funciona → dónde está en el código →
+  errores típicos → ejercicios. Enlazarla en `docs/aprendizaje/README.md`.
 - Al cerrar una sesión de trabajo → skill `/cerrar-sesion`.
 
 ## Seguridad

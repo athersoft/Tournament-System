@@ -19,5 +19,6 @@ Estados: `propuesto` · `aceptado` · `rechazado` · `reemplazado`
 | [0005](ADR-0005-obsidian-docs.md) | Documentación como vault de Obsidian en `docs/` | aceptado |
 | [0006](ADR-0006-uso-de-ia.md) | Desarrollo asistido por IA con contexto versionado | aceptado |
 | [0007](ADR-0007-postgresql-sqlalchemy.md) | PostgreSQL + SQLAlchemy 2.0 async + Alembic | aceptado |
+| [0008](ADR-0008-repositorios-y-errores.md) | Repositorios, transacciones y errores de aplicación | aceptado |
 
 Plantilla: [plantillas/adr.md](../plantillas/adr.md)

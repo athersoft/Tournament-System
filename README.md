@@ -59,15 +59,29 @@ La documentación interactiva queda disponible en <http://localhost:8000/docs>.
 
 ```
 app/
-├── api/          # Rutas y dependencias de FastAPI
-├── core/         # Configuración y base de datos
+├── api/          # Rutas, dependencias y traducción de errores a HTTP
+├── core/         # Configuración, base de datos, constantes y errores
 ├── models/       # Modelos ORM
+├── repositories/ # Consultas a la base de datos
 ├── schemas/      # Schemas Pydantic (entrada/salida)
 └── services/     # Lógica de dominio (brackets, suizo, ELO)
 tests/
 ├── unit/
 └── integration/
 ```
+
+## API
+
+| Método | Ruta | Descripción |
+|---|---|---|
+| `GET` | `/health` | Estado del servicio y de la base de datos |
+| `POST` | `/api/v1/players` | Crear jugador |
+| `GET` | `/api/v1/players?limit=&offset=&search=` | Listar jugadores (paginado) |
+| `GET` | `/api/v1/players/{id}` | Ver jugador |
+| `PATCH` | `/api/v1/players/{id}` | Renombrar jugador |
+| `DELETE` | `/api/v1/players/{id}` | Eliminar jugador |
+
+Documentación interactiva completa en `/docs`.
 
 ## Documentación
 

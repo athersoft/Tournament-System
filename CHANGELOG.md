@@ -9,6 +9,12 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 ### Added
 
+- CRUD de jugadores en `/api/v1/players`: crear, listar (paginación y búsqueda), ver, renombrar y eliminar.
+- Errores de aplicación (`NotFoundError`, `ConflictError`) con manejador global → 404 / 409.
+- Migración `add players table`; los tests de integración aplican las migraciones reales.
+- ADR-0008: repositorios, transacciones y errores de aplicación.
+- Notas didácticas en `docs/aprendizaje/`.
+
 - PostgreSQL 17 con `docker-compose.yml` (bases `torneos` y `torneos_test`).
 - SQLAlchemy 2 async: engine y sesión por petición (`SessionDep`), `Base` con convención de nombres.
 - Alembic configurado para leer la URL desde `Settings`; el CI verifica las migraciones.

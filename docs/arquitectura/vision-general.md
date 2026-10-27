@@ -14,14 +14,18 @@ de FastAPI ni de la base de datos**, para poder testearla de forma aislada y exh
 flowchart TD
     Client[Cliente HTTP] --> Routes
     subgraph app
-        Routes["api/routes<br/>HTTP: validación, status codes"] --> Services
-        Routes --> Schemas["schemas<br/>Pydantic (entrada/salida)"]
-        Services["services<br/>lógica de dominio pura"] --> Repos
-        Repos["repositories<br/>queries (Fase 1)"] --> Models["models<br/>ORM SQLAlchemy (Fase 1)"]
-        Core["core<br/>config, BD, seguridad"]
+        Routes["api/routes<br/>HTTP: validación, commit, status codes"] --> Schemas["schemas<br/>Pydantic (entrada/salida)"]
+        Routes --> Repos["repositories<br/>consultas, flush"]
+        Routes --> Services["services<br/>lógica de dominio pura (Fase 2)"]
+        Repos --> Models["models<br/>ORM SQLAlchemy"]
+        Core["core<br/>config, BD, constantes, errores"]
+        Errors["api/errors<br/>AppError → 404 / 409"]
     end
     Models --> DB[(PostgreSQL)]
 ```
+
+Los errores de las capas internas (`NotFoundError`, `ConflictError` en `core/exceptions.py`) no
+conocen HTTP; `api/errors.py` los traduce. Ver [ADR-0008](../decisiones/ADR-0008-repositorios-y-errores.md).
 
 ## Reglas de dependencia
 
@@ -29,8 +33,9 @@ flowchart TD
 |---|---|---|
 | `api/routes` | `schemas`, `services`, `api/deps`, `core` | `models` directamente para lógica |
 | `services` | stdlib, tipos/dataclasses propios | `fastapi`, `sqlalchemy`, `api` |
-| `repositories` | `models`, `core.database` | `api`, `schemas` |
-| `schemas` | `pydantic` | `models`, `services` |
+| `repositories` | `models`, `core` | `api`, `schemas` |
+| `models` | `core` | `schemas`, `api`, `repositories` |
+| `schemas` | `pydantic`, `core` | `models`, `services` |
 
 Los algoritmos (`bracket_generator`, `swiss_system`, `elo_calculator`) reciben y devuelven
 estructuras simples. La orquestación (cargar datos → llamar algoritmo → persistir) vive en

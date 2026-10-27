@@ -3,9 +3,12 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from app.api.routes import health
+from app.api.errors import register_error_handlers
+from app.api.routes import health, players
 from app.core.config import Settings, get_settings
 from app.core.database import create_engine, create_sessionmaker
+
+API_V1_PREFIX = "/api/v1"
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -25,7 +28,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         lifespan=lifespan,
     )
     app.state.settings = settings
+    register_error_handlers(app)
     app.include_router(health.router)
+    app.include_router(players.router, prefix=API_V1_PREFIX)
     return app
 
 

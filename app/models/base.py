@@ -1,5 +1,7 @@
-from sqlalchemy import MetaData
-from sqlalchemy.orm import DeclarativeBase
+from datetime import datetime
+
+from sqlalchemy import DateTime, MetaData, func
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 # Nombres de constraints predecibles para que Alembic genere migraciones estables.
 NAMING_CONVENTION = {
@@ -13,3 +15,17 @@ NAMING_CONVENTION = {
 
 class Base(DeclarativeBase):
     metadata = MetaData(naming_convention=NAMING_CONVENTION)
+
+
+class TimestampMixin:
+    """Fechas de creación y última modificación, asignadas por la base de datos."""
+
+    # Lee los valores generados por la base (RETURNING) en el mismo INSERT/UPDATE.
+    # Sin esto, acceder a created_at después de guardar dispararía una consulta implícita,
+    # que en modo async falla con `MissingGreenlet`.
+    __mapper_args__ = {"eager_defaults": True}  # noqa: RUF012
+
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+    )

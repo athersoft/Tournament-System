@@ -27,6 +27,7 @@ repos:
         args: []
         pass_filenames: false
         additional_dependencies:
+          - alembic>=1.14
           - fastapi>=0.115
           - pydantic>=2.9
           - pydantic-settings>=2.6

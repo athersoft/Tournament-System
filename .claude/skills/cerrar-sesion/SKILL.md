@@ -19,4 +19,7 @@ Objetivo: que la próxima sesión (humana o de IA) pueda continuar sin depender 
 4. **CHANGELOG** — si hubo cambios visibles para el usuario, añádelos bajo `## [Unreleased]`
    (Added / Changed / Fixed / Removed).
 5. Si se tomó una decisión técnica sin ADR, sugiere crearlo con `/adr`.
-6. Muestra un resumen de lo actualizado. No hagas commit.
+6. **Aprendizaje** — si la sesión introdujo conceptos nuevos que aún no tienen nota en
+   `docs/aprendizaje/`, escríbela (problema → cómo funciona → dónde está en el código →
+   errores típicos → ejercicios) y enlázala en `docs/aprendizaje/README.md`.
+7. Muestra un resumen de lo actualizado. No hagas commit.

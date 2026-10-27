@@ -13,10 +13,11 @@ from app.models.base import Base
 config = context.config
 
 if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
+    fileConfig(config.config_file_name, disable_existing_loggers=False)
 
 target_metadata = Base.metadata
-database_url = get_settings().database_url
+# Los tests pasan su propia URL (config.attributes); si no, se usa la de Settings.
+database_url: str = config.attributes.get("database_url") or get_settings().database_url
 
 
 def run_migrations_offline() -> None:
