@@ -73,6 +73,8 @@ addopts = "-ra --strict-markers"
 [tool.coverage.run]
 source = ["app"]
 branch = true
+# SQLAlchemy async ejecuta el código en greenlets y TestClient en otro hilo.
+concurrency = ["greenlet", "thread"]
 
 [tool.coverage.report]
 show_missing = true

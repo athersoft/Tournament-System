@@ -1,7 +1,7 @@
 ---
 tags: [roadmap]
 fase_actual: 1
-actualizado: 2026-10-26
+actualizado: 2026-10-27
 ---
 
 # Roadmap
@@ -16,8 +16,8 @@ Cada fase corresponde a un **milestone de GitHub** y termina en una release etiq
 - [x] `GET /health` con test
 - [x] README, CHANGELOG, LICENSE, plantillas de PR e issues
 - [x] Repositorio publicado en GitHub
-- [ ] Tag `v0.1.0`
-- [ ] Protección de rama `main` (PR + CI obligatorios)
+- [x] Tag `v0.1.0`
+- [x] Protección de rama `main` (PR + CI obligatorios)
 - [x] Vault de Obsidian y configuración de IA (`CLAUDE.md`, `.claude/`)
 
 ## ⏳ Fase 1 — Núcleo de datos · `v0.2.0`
@@ -25,10 +25,11 @@ Cada fase corresponde a un **milestone de GitHub** y termina en una release etiq
 - [x] ADR: PostgreSQL + SQLAlchemy 2.0 async + Alembic ([ADR-0007](../decisiones/ADR-0007-postgresql-sqlalchemy.md))
 - [x] `core/database.py` (engine y sesión async) + docker-compose con PostgreSQL
 - [x] Alembic configurado + verificación de migraciones en CI
-- [ ] Modelos `Player`, `Tournament`, `Registration`, `Match` + migración inicial
-- [ ] Repositorios y CRUD de jugadores y torneos (paginación, filtros)
-- [ ] Manejo de errores consistente (404, 409, 422)
-- [ ] Tests de integración con BD aislada
+- [x] Modelo `Player` + migración + CRUD `/api/v1/players` (paginación, búsqueda) — PR #3
+- [x] Repositorios y manejo de errores consistente (404, 409, 422) ([ADR-0008](../decisiones/ADR-0008-repositorios-y-errores.md))
+- [x] Tests de integración con BD aislada (migraciones reales + `TRUNCATE` por test)
+- [ ] Modelos `Tournament` y `Registration` + CRUD de torneos e inscripciones
+- [ ] Modelo `Match` (sin lógica de rondas todavía)
 - [ ] Revisar aviso de Starlette sobre `httpx` en `TestClient`
 
 ## Fase 2 — Lógica de torneos · `v0.3.0`
@@ -48,7 +49,7 @@ Cada fase corresponde a un **milestone de GitHub** y termina en una release etiq
 ## Fase 4 — Calidad de producción · `v0.5.0`
 
 - [ ] Dockerfile multi-stage, logging estructurado, manejo global de errores
-- [ ] CORS, rate limiting, versionado `/api/v1`
+- [ ] CORS, rate limiting (versionado `/api/v1` ya adelantado en Fase 1)
 - [ ] Lockfile (evaluar `uv`, ver ADR-0004)
 
 ## Fase 5 — Deploy y presentación · `v1.0.0`

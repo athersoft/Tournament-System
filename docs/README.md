@@ -17,6 +17,7 @@ Es la memoria del proyecto: lo que se decidió, por qué, y en qué punto estamo
 | [Roadmap](roadmap/roadmap.md) | Fases, milestones y estado actual |
 | [Bitácora](bitacora/) | Notas por sesión de trabajo |
 | [Uso de IA](ia/uso-de-ia.md) | Política y flujo de trabajo con asistentes de IA |
+| [Aprendizaje](aprendizaje/README.md) | Notas didácticas de los conceptos de cada avance |
 
 ## Convenciones del vault
 
