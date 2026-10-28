@@ -16,7 +16,7 @@ flowchart TD
     subgraph app
         Routes["api/routes<br/>HTTP: validación, commit, status codes"] --> Schemas["schemas<br/>Pydantic (entrada/salida)"]
         Routes --> Repos["repositories<br/>consultas, flush"]
-        Routes --> Services["services<br/>lógica de dominio pura (Fase 2)"]
+        Routes --> Services["services<br/>lógica de dominio pura (reglas, algoritmos)"]
         Repos --> Models["models<br/>ORM SQLAlchemy"]
         Core["core<br/>config, BD, constantes, errores"]
         Errors["api/errors<br/>AppError → 404 / 409"]

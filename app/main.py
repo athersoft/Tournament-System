@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.api.errors import register_error_handlers
-from app.api.routes import health, players
+from app.api.routes import health, players, registrations, tournaments
 from app.core.config import Settings, get_settings
 from app.core.database import create_engine, create_sessionmaker
 
@@ -31,6 +31,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     register_error_handlers(app)
     app.include_router(health.router)
     app.include_router(players.router, prefix=API_V1_PREFIX)
+    app.include_router(tournaments.router, prefix=API_V1_PREFIX)
+    app.include_router(registrations.router, prefix=API_V1_PREFIX)
     return app
 
 

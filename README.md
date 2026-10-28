@@ -79,7 +79,14 @@ tests/
 | `GET` | `/api/v1/players?limit=&offset=&search=` | Listar jugadores (paginado) |
 | `GET` | `/api/v1/players/{id}` | Ver jugador |
 | `PATCH` | `/api/v1/players/{id}` | Renombrar jugador |
-| `DELETE` | `/api/v1/players/{id}` | Eliminar jugador |
+| `DELETE` | `/api/v1/players/{id}` | Eliminar jugador (409 si está inscrito) |
+| `POST` | `/api/v1/tournaments` | Crear torneo (nace como borrador) |
+| `GET` | `/api/v1/tournaments?status=&format=` | Listar torneos (paginado, con filtros) |
+| `GET` / `PATCH` / `DELETE` | `/api/v1/tournaments/{id}` | Ver, editar o eliminar torneo |
+| `POST` | `/api/v1/tournaments/{id}/open-registration` | Abrir inscripciones |
+| `POST` | `/api/v1/tournaments/{id}/cancel` | Cancelar torneo |
+| `POST` / `GET` | `/api/v1/tournaments/{id}/registrations` | Inscribir jugador / listar inscritos |
+| `DELETE` | `/api/v1/tournaments/{id}/registrations/{player_id}` | Desinscribir jugador |
 
 Documentación interactiva completa en `/docs`.
 

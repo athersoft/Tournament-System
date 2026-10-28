@@ -43,5 +43,13 @@ class PlayerRepository:
         return player
 
     async def delete(self, player: Player) -> None:
+        """La FK `ON DELETE RESTRICT` impide borrar jugadores con inscripciones."""
+        player_id = player.id
         await self.session.delete(player)
-        await self.session.flush()
+        try:
+            await self.session.flush()
+        except IntegrityError as exc:
+            await self.session.rollback()
+            raise ConflictError(
+                f"El jugador {player_id} está inscrito en torneos y no se puede eliminar"
+            ) from exc

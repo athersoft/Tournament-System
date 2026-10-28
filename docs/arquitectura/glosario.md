@@ -11,7 +11,9 @@ Si un término cambia de significado, se actualiza aquí primero.
 |---|---|---|
 | Torneo | `Tournament` | Competencia con un formato, participantes inscritos y un ciclo de vida. |
 | Participante / Jugador | `Player` | Entidad que compite. Tiene un rating ELO. |
-| Inscripción | `Registration` | Relación jugador–torneo; puede incluir el *seed*. |
+| Inscripción | `Registration` | Relación jugador–torneo. Un jugador se inscribe una sola vez por torneo. |
+| Estado | `TournamentStatus` | Etapa del ciclo de vida: `draft`, `registration`, `in_progress`, `finished`, `cancelled`. |
+| Cupo | `max_players` | Máximo de inscritos; `null` = sin límite. |
 | Partida | `Match` | Enfrentamiento entre dos participantes dentro de una ronda. |
 | Ronda | `round` | Conjunto de partidas que se juegan en paralelo. |
 | Formato | `TournamentFormat` | `single_elimination`, `swiss`, `round_robin`. |
@@ -27,13 +29,16 @@ Si un término cambia de significado, se actualiza aquí primero.
 
 ## Ciclo de vida del torneo
 
+Fuente de verdad: `ALLOWED_TRANSITIONS` en `app/services/tournament_lifecycle.py`
+([ADR-0009](../decisiones/ADR-0009-ciclo-de-vida-torneo.md)).
+
 ```mermaid
 stateDiagram-v2
-    [*] --> DRAFT
-    DRAFT --> REGISTRATION: abrir inscripciones
-    REGISTRATION --> IN_PROGRESS: iniciar
-    IN_PROGRESS --> FINISHED: última ronda cerrada
-    DRAFT --> CANCELLED
-    REGISTRATION --> CANCELLED
-    FINISHED --> [*]
+    [*] --> draft
+    draft --> registration: open-registration
+    registration --> in_progress: start (Fase 2)
+    in_progress --> finished: última ronda cerrada
+    draft --> cancelled: cancel
+    registration --> cancelled: cancel
+    finished --> [*]
 ```

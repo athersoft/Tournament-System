@@ -15,6 +15,7 @@ errores típicos y ejercicios para practicar.
 | 02 | [Inyección de dependencias](02-inyeccion-de-dependencias.md) | Base de datos (PR #2) |
 | 03 | [Migraciones con Alembic](03-migraciones.md) | Base de datos (PR #2) |
 | 04 | [CRUD de jugadores: repositorios, errores y paginación](04-crud-jugadores.md) | Jugadores (PR #3) |
+| 05 | [Torneos e inscripciones: estados, relaciones y concurrencia](05-torneos-e-inscripciones.md) | Torneos (PR #4) |
 
 ## Cómo estudiar estas notas
 
