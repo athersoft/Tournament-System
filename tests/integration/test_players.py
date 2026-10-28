@@ -3,15 +3,13 @@ from typing import Any
 import pytest
 from fastapi.testclient import TestClient
 
-PLAYERS_URL = "/api/v1/players"
-
-
-def create_player(client: TestClient, name: str, **extra: Any) -> dict[str, Any]:
-    response = client.post(PLAYERS_URL, json={"name": name, **extra})
-    assert response.status_code == 201, response.text
-    body: dict[str, Any] = response.json()
-    return body
-
+from tests.integration.factories import (
+    PLAYERS_URL,
+    create_player,
+    create_tournament,
+    open_registration,
+    register,
+)
 
 # --- Crear ---------------------------------------------------------------
 
@@ -188,3 +186,17 @@ def test_delete_player_returns_404_when_player_does_not_exist(client: TestClient
     response = client.delete(f"{PLAYERS_URL}/999")
 
     assert response.status_code == 404
+
+
+def test_delete_player_returns_409_when_player_is_registered_in_a_tournament(
+    client: TestClient,
+) -> None:
+    player = create_player(client, "Magnus")
+    tournament = create_tournament(client)
+    open_registration(client, tournament["id"])
+    register(client, tournament["id"], player["id"])
+
+    response = client.delete(f"{PLAYERS_URL}/{player['id']}")
+
+    assert response.status_code == 409
+    assert client.get(f"{PLAYERS_URL}/{player['id']}").status_code == 200

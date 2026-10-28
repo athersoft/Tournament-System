@@ -1,20 +1,17 @@
-from typing import Annotated, Any
+from typing import Annotated
 
 from fastapi import APIRouter, Query, status
 
 from app.api.deps import PlayerRepositoryDep, SessionDep
+from app.api.responses import conflict, not_found
 from app.models.player import Player
 from app.schemas.pagination import Page
 from app.schemas.player import PlayerCreate, PlayerRead, PlayerUpdate
 
 router = APIRouter(prefix="/players", tags=["players"])
 
-Responses = dict[int | str, dict[str, Any]]
-
-ERROR_404: Responses = {status.HTTP_404_NOT_FOUND: {"description": "El jugador no existe"}}
-ERROR_409: Responses = {
-    status.HTTP_409_CONFLICT: {"description": "Ya existe un jugador con ese nombre"}
-}
+ERROR_404 = not_found("El jugador no existe")
+ERROR_409 = conflict("Ya existe un jugador con ese nombre")
 
 
 @router.post(
@@ -74,7 +71,7 @@ async def update_player(
     "/{player_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Eliminar jugador",
-    responses=ERROR_404,
+    responses={**ERROR_404, **conflict("El jugador está inscrito en algún torneo")},
 )
 async def delete_player(player_id: int, repo: PlayerRepositoryDep, session: SessionDep) -> None:
     player = await repo.get(player_id)

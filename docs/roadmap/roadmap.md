@@ -28,12 +28,15 @@ Cada fase corresponde a un **milestone de GitHub** y termina en una release etiq
 - [x] Modelo `Player` + migración + CRUD `/api/v1/players` (paginación, búsqueda) — PR #3
 - [x] Repositorios y manejo de errores consistente (404, 409, 422) ([ADR-0008](../decisiones/ADR-0008-repositorios-y-errores.md))
 - [x] Tests de integración con BD aislada (migraciones reales + `TRUNCATE` por test)
-- [ ] Modelos `Tournament` y `Registration` + CRUD de torneos e inscripciones
-- [ ] Modelo `Match` (sin lógica de rondas todavía)
+- [x] Modelos `Tournament` y `Registration` + CRUD de torneos e inscripciones — PR #4
+- [x] Ciclo de vida del torneo con reglas puras y tests unitarios ([ADR-0009](../decisiones/ADR-0009-ciclo-de-vida-torneo.md))
 - [ ] Revisar aviso de Starlette sobre `httpx` en `TestClient`
+- [ ] Release `v0.2.0` al mergear el PR #4
 
 ## Fase 2 — Lógica de torneos · `v0.3.0`
 
+- [ ] Modelo `Match` (movido desde la Fase 1: su forma depende de los algoritmos de emparejamiento)
+- [ ] Seed de las inscripciones (por rating, al iniciar el torneo)
 - [ ] Eliminación directa: seeding, byes, avance de ronda
 - [ ] Sistema suizo: emparejamiento por puntaje sin repetir rival, Buchholz, Sonneborn-Berger
 - [ ] Round robin (algoritmo del círculo)
